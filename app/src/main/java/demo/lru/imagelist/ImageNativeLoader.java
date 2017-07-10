@@ -35,7 +35,7 @@ public class ImageNativeLoader {
 
     private ImageNativeLoader(int tartScreenWidth, BitmapLoadCallback callback) {
         int maxSize = (int) Runtime.getRuntime().maxMemory() / 2;
-        Log.d(getClass().getName(), "max memory size is " + String.valueOf(maxSize/(1024*1024)));
+        Log.d(getClass().getName(), "max memory size is " + String.valueOf(maxSize/(1024*1024)) + "M");
         imageCaches = new ImageLruCache(maxSize);
         targetScreenWidth = tartScreenWidth;
         this.callback = callback;
@@ -68,9 +68,8 @@ public class ImageNativeLoader {
         protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
             if (evicted && newValue == null) {
                 Log.d(getClass().getName(), "bitmap recycled \"" + key + "\" from memory");
-//                removedBitmap.put(key, new SoftReference<Bitmap>(oldValue));
-//                if(!oldValue.isRecycled())
-//                    oldValue.recycle();
+                if(!oldValue.isRecycled())
+                    oldValue.recycle();
             }
         }
 
