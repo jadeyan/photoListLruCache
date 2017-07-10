@@ -85,10 +85,7 @@ public class MainActivity extends AppCompatActivity implements BitmapLoadCallbac
             if(oldMills == 0)
                 oldMills = curMills;
 
-            long detalMills = curMills - oldMills;
             oldMills = curMills;
-//            Log.d("current mills detal is ", String.valueOf(detalMills));
-//            Log.d("current detalY is ", String.valueOf(dy));
 
             if(dy < 70 && stopLoadingFlag) {
                 stopLoadingFlag = false;

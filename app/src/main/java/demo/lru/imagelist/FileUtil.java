@@ -19,14 +19,6 @@ import java.util.ArrayList;
 
 public class FileUtil {
 
-    public static String rootPath = Environment.getExternalStorageDirectory().getPath();
-
-//    static {
-//        String status = Environment.getExternalStorageState();
-//        if (status.equals(Environment.MEDIA_MOUNTED)) {
-//        }
-//    }
-
     public static Bitmap loadBitmapFile(String filePath, int targetScreenWidth) {
         if (TextUtils.isEmpty(filePath))
             return null;

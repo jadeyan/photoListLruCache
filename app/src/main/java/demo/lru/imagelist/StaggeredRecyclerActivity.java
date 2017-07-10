@@ -33,7 +33,7 @@ public class StaggeredRecyclerActivity extends Activity {
         photoUrls = FileUtil.getDCIMPath(getContentResolver());
 
 //        adapter = new StaggeredAdapter();
-        imageList.setAdapter(adapter);
+//        imageList.setAdapter(adapter);
 
     }
 }

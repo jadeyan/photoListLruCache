@@ -23,8 +23,6 @@ public class ImageNativeLoader {
 
     private ExecutorService cachedThreadPool = Executors.newFixedThreadPool(3);
 
-//    HashMap<String, SoftReference<Bitmap>> removedBitmap;
-
     private ImageLruCache imageCaches;
 
     private static ImageNativeLoader instance;
@@ -39,7 +37,6 @@ public class ImageNativeLoader {
         int maxSize = (int) Runtime.getRuntime().maxMemory() / 2;
         Log.d(getClass().getName(), "max memory size is " + String.valueOf(maxSize/(1024*1024)));
         imageCaches = new ImageLruCache(maxSize);
-//        removedBitmap = new HashMap<String, SoftReference<Bitmap>>();
         targetScreenWidth = tartScreenWidth;
         this.callback = callback;
     }
@@ -84,7 +81,7 @@ public class ImageNativeLoader {
          * @return
          */
         protected int sizeOf(String key, Bitmap value) {
-//            Log.d(getClass().getName(),"image:" + key+ "  size:" + value.getByteCount()/1024 + "K");
+            Log.d(getClass().getName(),"image:" + key+ "  size:" + value.getByteCount()/1024 + "K");
             return value.getByteCount();
         }
     }
@@ -98,7 +95,6 @@ public class ImageNativeLoader {
                     if (key != null && key.indexOf(File.separatorChar) > 0) {
                         tempKey = key.substring(key.lastIndexOf(File.separatorChar));
                     }
-//                    Log.d(getClass().getName(), "before load bitmap \"" + tempKey + "\" from local");
                     Bitmap bitmap = FileUtil.loadBitmapFile(key, targetScreenWidth);
                     if (bitmap != null) {
                         imageCaches.put(key, bitmap);
@@ -117,18 +113,8 @@ public class ImageNativeLoader {
 
         Bitmap cachedBitmap = imageCaches.get(key);
         if (cachedBitmap == null) {
-//            if (removedBitmap.containsKey(key)) {
-//                cachedBitmap = removedBitmap.get(key).get();
-//            }
-//            if (cachedBitmap == null) {
-//                removedBitmap.remove(key);
                 WeakReference<ImageView> photoRef = new WeakReference<ImageView>(photo);
                 loadImageToMemoryCache(key, photoRef);
-//            } else {
-//                if (key.indexOf(File.separatorChar) > 0)
-//                    key = key.substring(key.lastIndexOf(File.separatorChar));
-//                Log.d(getClass().getName(), "get bitmap \"" + key + "\" from softReference");
-//            }
         } else {
             if (key.indexOf(File.separatorChar) > 0)
                 key = key.substring(key.lastIndexOf(File.separatorChar));
